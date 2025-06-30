@@ -39,7 +39,11 @@ const SideBox = () => {
           <ColorCircleAvatar
             isGradient
             color={""}
-            onClick={() => setShowPallete(!showPalette)}
+            selected={selectedColor === "gradient"}
+            onClick={() => {
+              setShowPallete(!showPalette);
+              setSelectedColor("gradient");
+            }}
           />
           {showPalette && <PaletteBox />}
           {Object.entries(COLORS).map(([name, color]) => (
@@ -47,7 +51,10 @@ const SideBox = () => {
               key={name}
               color={color}
               selected={selectedColor === color}
-              onClick={() => setSelectedColor(color)}
+              onClick={() => {
+                setSelectedColor(color);
+                setShowPallete(false);
+              }}
             />
           ))}
         </PalleteWrapper>

@@ -1,12 +1,19 @@
 import styled from "@emotion/styled";
 import theme from "../styles/theme";
 import ColorSlider from "./ColorSlider";
+import { useState } from "react";
+import { Icons } from "../assets/icons";
 
 const PaletteBox = () => {
+  const [color, setColor] = useState<string>("#000000");
+  const { color_code_icon: ColorCodeIcon } = Icons;
   return (
     <PaletteBoxWrapper>
-      <ColorBox />
-      <ColorSlider />
+      <ColorSlider color={color} onChange={setColor} />
+      <ColorCodeWrapper>
+        <ColorCodeIcon />
+        {color.toUpperCase()}
+      </ColorCodeWrapper>
     </PaletteBoxWrapper>
   );
 };
@@ -17,6 +24,7 @@ const PaletteBoxWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   position: absolute;
   top: 0;
   right: -204px;
@@ -30,10 +38,11 @@ const PaletteBoxWrapper = styled.div`
   z-index: 999;
 `;
 
-const ColorBox = styled.div`
-  width: 172px;
-  height: 172px;
-  border-radius: 16px;
-  background-color: ${theme.color.neutral.B00};
-  margin-bottom: 0.75rem;
+const ColorCodeWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font: ${theme.typography["body3-1"]};
+  color: ${theme.color.neutral.B40};
 `;

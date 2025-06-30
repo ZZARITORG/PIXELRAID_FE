@@ -1,79 +1,41 @@
-import React, { useState } from "react";
+import { HexColorPicker } from "react-colorful";
 import styled from "@emotion/styled";
+import theme from "../styles/theme";
 
-const ColorSlider = () => {
-  const [hue, setHue] = useState(0);
+interface Props {
+  color: string;
+  onChange: (color: string) => void;
+}
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setHue(Number(e.target.value));
-  };
-
-  return (
-    <Wrapper>
-      <Slider
-        type="range"
-        min="0"
-        max="360"
-        value={hue}
-        onChange={handleChange}
-        hue={hue}
-      />
-      <ThumbPreview style={{ backgroundColor: `hsl(${hue}, 100%, 50%)` }} />
-    </Wrapper>
-  );
+const ColorSlider = ({ color, onChange }: Props) => {
+  return <StyledPicker color={color} onChange={onChange} />;
 };
 
 export default ColorSlider;
 
-const Wrapper = styled.div`
-  position: relative;
-  width: 300px;
-`;
-
-const Slider = styled.input<{ hue: number }>`
-  -webkit-appearance: none;
-  width: 100%;
-  height: 16px;
-  border-radius: 8px;
-  background: linear-gradient(
-    to right,
-    red 0%,
-    yellow 17%,
-    lime 33%,
-    cyan 50%,
-    blue 67%,
-    magenta 83%,
-    red 100%
-  );
-  outline: none;
-  cursor: pointer;
-
-  &::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: hsl(${(props) => props.hue}, 100%, 50%);
-    border: 4px solid white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
-    margin-top: -6px;
+const StyledPicker = styled(HexColorPicker)`
+  &.react-colorful {
+    width: 172px !important;
+  }
+  .react-colorful__saturation {
+    width: 100%;
+    height: 172px !important;
+    border-radius: 16px;
+    border: none;
+    flex: none;
   }
 
-  &::-moz-range-thumb {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: hsl(${(props) => props.hue}, 100%, 50%);
-    border: 4px solid white;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  .react-colorful__hue {
+    margin-top: 12px;
+    height: 8px;
+    border-radius: 8px;
   }
-`;
 
-const ThumbPreview = styled.div`
-  margin-top: 12px;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 1px solid #ccc;
+  .react-colorful__hue-pointer,
+  .react-colorful__saturation-pointer {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 2px solid ${theme.color.neutral.B00};
+  }
 `;
