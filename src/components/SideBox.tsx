@@ -17,14 +17,18 @@ const COLORS = {
   purple: "#8B5CF6",
 };
 
-const SideBox = () => {
+type SideBoxProps = {
+  selectedColor: string;
+  setSelectedColor: (color: string) => void;
+};
+
+const SideBox = ({ selectedColor, setSelectedColor }: SideBoxProps) => {
   const {
     timer_icon: TimerIcon,
     spoide_icon: SpoideIcon,
     lock_icon: LockIcon,
     user_icon: UserIcon,
   } = Icons;
-  const [selectedColor, setSelectedColor] = useState<string>("");
   const [showPalette, setShowPallete] = useState<boolean>(false);
 
   return (
@@ -45,7 +49,12 @@ const SideBox = () => {
               setSelectedColor("gradient");
             }}
           />
-          {showPalette && <PaletteBox />}
+          {showPalette && (
+            <PaletteBox
+              color={selectedColor}
+              onChange={(newColor) => setSelectedColor(newColor)}
+            />
+          )}
           {Object.entries(COLORS).map(([name, color]) => (
             <ColorCircleAvatar
               key={name}
@@ -81,7 +90,7 @@ const SideBoxWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   width: 88px;
-  height: 38.75rem;
+  height: 620px;
   padding: 20px 0;
   border-radius: 8px;
   background-color: ${theme.color.neutral.white};

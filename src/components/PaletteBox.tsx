@@ -1,15 +1,18 @@
 import styled from "@emotion/styled";
 import theme from "../styles/theme";
 import ColorSlider from "./ColorSlider";
-import { useState } from "react";
 import { Icons } from "../assets/icons";
 
-const PaletteBox = () => {
-  const [color, setColor] = useState<string>("#000000");
+type PaletteBoxProps = {
+  color: string;
+  onChange: (color: string) => void;
+};
+
+const PaletteBox = ({ color, onChange }: PaletteBoxProps) => {
   const { color_code_icon: ColorCodeIcon } = Icons;
   return (
     <PaletteBoxWrapper>
-      <ColorSlider color={color} onChange={setColor} />
+      <ColorSlider color={color} onChange={onChange} />
       <ColorCodeWrapper>
         <ColorCodeIcon />
         {color.toUpperCase()}

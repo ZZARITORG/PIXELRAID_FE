@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import theme from "../styles/theme";
 
 const Timer = () => {
@@ -18,6 +18,7 @@ const Timer = () => {
     }, INTERVAL);
 
     return () => clearInterval(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const seconds = String(Math.floor(timeLeft / 1000)).padStart(2, "0");
