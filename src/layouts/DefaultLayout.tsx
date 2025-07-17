@@ -1,19 +1,52 @@
+// ✅ DefaultLayout.tsx
 import styled from "@emotion/styled";
 import { Outlet } from "react-router-dom";
 import theme from "../styles/theme";
 import Topbar from "../components/common/Topbar";
+import SideBox from "../components/SideBox";
+import { useState } from "react";
 
 const DefaultLayout = () => {
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [scale, setScale] = useState(1);
+  const [offset, setOffset] = useState({ x: 0, y: 0 });
+
+  const [selectedColor, setSelectedColor] = useState<string>(
+    theme.color.neutral.black
+  );
+  const [isLocked, setIsLocked] = useState<boolean>(false);
+
   return (
     <LayoutContainer>
       <TopBarWrapper>
-        <Topbar />
+        <Topbar mousePos={mousePos} />
       </TopBarWrapper>
-      <SideAdvertiseWrapper></SideAdvertiseWrapper>
-      <BottomAdvertiseWrapper></BottomAdvertiseWrapper>
-      <OutletWrapper>
-        <Outlet />
-      </OutletWrapper>
+
+      <SideAdvertiseWrapper />
+      <BottomAdvertiseWrapper />
+
+      <SideBoxWrapper>
+        <SideBox
+          selectedColor={selectedColor}
+          setSelectedColor={setSelectedColor}
+          isLocked={isLocked}
+          setIsLocked={setIsLocked}
+        />
+      </SideBoxWrapper>
+
+      <CanvasViewport>
+        <Outlet
+          context={{
+            setMousePos,
+            scale,
+            offset,
+            setOffset,
+            selectedColor,
+            setScale,
+            isLocked,
+          }}
+        />
+      </CanvasViewport>
     </LayoutContainer>
   );
 };
@@ -21,11 +54,10 @@ const DefaultLayout = () => {
 export default DefaultLayout;
 
 const LayoutContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
   background-color: ${theme.color.neutral.B40};
 `;
 
@@ -35,13 +67,16 @@ const TopBarWrapper = styled.div`
   width: 100%;
   height: 7rem;
   z-index: 10;
+  background-color: transparent;
 `;
 
-const OutletWrapper = styled.div`
-  min-height: calc(100vh - 7rem);
-  height: 100%;
-  padding-top: 8rem;
-  box-sizing: border-box;
+const CanvasViewport = styled.div`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 `;
 
 const SideAdvertiseWrapper = styled.div`
@@ -63,5 +98,12 @@ const BottomAdvertiseWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   background-color: ${theme.color.neutral.black};
+  z-index: 10;
+`;
+
+const SideBoxWrapper = styled.div`
+  position: fixed;
+  left: 12px;
+  top: 9rem;
   z-index: 10;
 `;

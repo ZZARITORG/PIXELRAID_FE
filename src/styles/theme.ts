@@ -52,10 +52,10 @@ const theme: DefaultTheme = {
   },
 
   typography: {
-    // Title (20px)
-    "title1-1": { fontSize: "20px", fontWeight: 700 }, // Bold
-    "title1-2": { fontSize: "20px", fontWeight: 600 }, // SemiBold
-    "title1-3": { fontSize: "20px", fontWeight: 500 }, // Medium
+    // Title (28px)
+    "title1-1": { fontSize: "28px", fontWeight: 700 }, // Bold
+    "title1-2": { fontSize: "28px", fontWeight: 600 }, // SemiBold
+    "title1-3": { fontSize: "28px", fontWeight: 500 }, // Medium
 
     // Body1 (18px)
     "body1-1": { fontSize: "18px", fontWeight: 700 },

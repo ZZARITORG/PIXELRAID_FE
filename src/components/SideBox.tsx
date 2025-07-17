@@ -20,16 +20,45 @@ const COLORS = {
 type SideBoxProps = {
   selectedColor: string;
   setSelectedColor: (color: string) => void;
+  isLocked: boolean;
+  setIsLocked: (lock: boolean) => void;
 };
 
-const SideBox = ({ selectedColor, setSelectedColor }: SideBoxProps) => {
+const SideBox = ({
+  selectedColor,
+  setSelectedColor,
+  isLocked,
+  setIsLocked,
+}: SideBoxProps) => {
   const {
     timer_icon: TimerIcon,
     spoide_icon: SpoideIcon,
     lock_icon: LockIcon,
     user_icon: UserIcon,
+    locked_icon: LockedIcon,
   } = Icons;
   const [showPalette, setShowPallete] = useState<boolean>(false);
+  const [isSpoidIconClicked, setIsSpoidIconClicked] = useState<boolean>(false);
+
+  const handlePickColor = async () => {
+    if (!window.EyeDropper) {
+      alert("이 브라우저는 스포이드 기능을 지원하지 않습니다.");
+      return;
+    }
+
+    try {
+      const eyeDropper = new window.EyeDropper();
+      const result = await eyeDropper.open();
+      setSelectedColor(result.sRGBHex);
+      setIsSpoidIconClicked(true);
+    } catch (err) {
+      console.error("스포이드 오류:", err);
+    }
+  };
+
+  const handleScreenLock = () => {
+    setIsLocked(!isLocked);
+  };
 
   return (
     <SideBoxWrapper>
@@ -67,12 +96,15 @@ const SideBox = ({ selectedColor, setSelectedColor }: SideBoxProps) => {
             />
           ))}
         </PalleteWrapper>
-        <IconWrapper style={{ marginBottom: "1.125rem" }}>
+        <SpoidIconWrapper
+          onClick={handlePickColor}
+          isIconClicked={isSpoidIconClicked}
+        >
           <SpoideIcon />
-        </IconWrapper>
-        <IconWrapper>
-          <LockIcon />
-        </IconWrapper>
+        </SpoidIconWrapper>
+        <LockIconWrapper onClick={handleScreenLock}>
+          {isLocked ? <LockedIcon /> : <LockIcon />}
+        </LockIconWrapper>
       </ContentWrapper>
       <UserWrapper>
         <UserIcon />
@@ -141,6 +173,20 @@ const UserCount = styled.div`
   color: ${theme.color.neutral.B20};
 `;
 
-const IconWrapper = styled.div`
+const SpoidIconWrapper = styled.div<{ isIconClicked: boolean }>`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.125rem;
+`;
+
+const LockIconWrapper = styled.div`
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 `;
