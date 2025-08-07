@@ -17,13 +17,13 @@
 ## 👥 Contributors
 <table align="center">
   <tr>
-    <td align="center">Backend</td>
-    <td align="center">Backend</td>
+    <td align="center">Frontend</td>
+    <td align="center">Frontend</td>
   </tr>
   <tr>
     <td>
-      <a href="https://github.com/baecheolhyeon">
-        <img src="https://github.com/baecheolhyeon.png" width="150" style="max-width: 100%;">
+      <a href="https://github.com/kimjj0">
+        <img src="https://github.com/kimjj0.png" width="150" style="max-width: 100%;">
       </a>
     </td>
     <td>
@@ -34,7 +34,7 @@
   <tr>
   <tr>
     <td align="center">
-      <a href="https://github.com/baecheolhyoen">배철현</a>
+      <a href="https://github.com/kimjj0">김지호</a>
     </td>
     <td align="center">
       <a href="https://github.com/Taylor2921">김태현</a>
